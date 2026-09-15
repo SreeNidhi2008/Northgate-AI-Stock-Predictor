@@ -4,7 +4,7 @@ import pandas as pd
 model = joblib.load("models/aapl_random_forest.pkl")
 data = pd.read_csv("data/aapl_features.csv")
 
-feature_columns = ["Close", "MA_7", "MA_30", "Daily_Return"]
+feature_columns = ["Close", "MA_7", "MA_30", "MA_90", "Daily_Return", "Volatility_7", "RSI_14"]
 latest_data = data[feature_columns].tail(1)
 
 predicted_price = model.predict(latest_data)[0]

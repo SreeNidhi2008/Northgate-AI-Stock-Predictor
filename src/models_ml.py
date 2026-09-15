@@ -10,7 +10,7 @@ data = pd.read_csv("data/aapl_features.csv")
 data["Tomorrow_Close"] = data["Close"].shift(-1)
 data = data.dropna()
 
-feature_columns = ["Close", "MA_7", "MA_30", "Daily_Return"]
+feature_columns = ["Close", "MA_7", "MA_30", "MA_90", "Daily_Return", "Volatility_7", "RSI_14"]
 
 X = data[feature_columns]
 y = data["Tomorrow_Close"]
