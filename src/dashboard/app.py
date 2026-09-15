@@ -57,7 +57,8 @@ model.fit(X_train, y_train)
 
 predicted_price = model.predict(X.tail(1))[0]
 current_price = data["Close"].iloc[-1]
-error = mean_absolute_error(y_test, model.predict(X_test))
+test_predictions = model.predict(X_test)
+error = mean_absolute_error(y_test, test_predictions)
 
 first_column, second_column, third_column = st.columns(3)
 first_column.metric("Latest closing price", f"${current_price:.2f}")
@@ -66,4 +67,15 @@ third_column.metric("Average test error", f"${error:.2f}")
 
 st.subheader(f"{selected_name} closing-price history")
 st.line_chart(data.set_index("Date")["Close"])
+st.subheader("Actual vs predicted prices on test data")
+
+comparison = pd.DataFrame(
+    {
+        "Actual price": y_test.values,
+        "Predicted price": test_predictions,
+    },
+    index=data["Date"].iloc[split_point:],
+)
+
+st.line_chart(comparison)
 st.caption("Educational project only — not financial advice.")
